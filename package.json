@@ -1,0 +1,48 @@
+{
+  "name": "letsgo",
+  "version": "1.0.0",
+  "description": "share and coordinate packing list for a trip",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server/server.js",
+    "build": "webpack -d --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rongsiu/LetsGo.git"
+  },
+  "author": "Rongsiu Lim",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "mongoose": "^5.1.2",
+    "path": "^0.12.7",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-dropzone": "^4.2.9",
+    "react-modal": "^3.4.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "uuidv4": "^1.0.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
+  },
+  "bugs": {
+    "url": "https://github.com/rongsiu/LetsGo/issues"
+  },
+  "homepage": "https://github.com/rongsiu/LetsGo#readme"
+}
