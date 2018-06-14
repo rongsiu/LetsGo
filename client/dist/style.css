@@ -1,0 +1,18 @@
+body {	font-family: 'Indie Flower', cursive;	
+}
+
+#logo {
+	font-size: 40px;
+	font-weight: bold;
+	color: white;
+}
+
+.header {
+	background-color: #3C4F76;
+}
+
+.main_trip {
+	border-style: solid;
+	border-color: black;
+	padding: 5px;
+}
