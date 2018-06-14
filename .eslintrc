@@ -14,6 +14,8 @@
   },
   "extends": "airbnb",
   "rules": {
+    "indent": [2, 2],
+    "no-tabs": 0,
     "no-console": "off",
     "max-len": "off",
     "no-undef": "off",
