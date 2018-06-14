@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Trips from './Trips.jsx';
+import Pack from './Pack.jsx';
 
 const App = (props) => {
   return (
@@ -20,6 +21,8 @@ const App = (props) => {
       <h3>Upcoming Trips</h3>
       <Trips />
       <h3>Completed Trips</h3>
+      <Trips />
+      <Pack />
     </div>
   );
 };
