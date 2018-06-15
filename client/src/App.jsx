@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Trips from './Trips.jsx';
 import Pack from './Pack.jsx';
+import Nav from './Nav.jsx'
 
 class App extends React.Component {
 
@@ -11,8 +12,10 @@ class App extends React.Component {
       <div >
         <BrowserRouter>
           <Switch>
+            <Nav>
             <Route exact path="/trips" component={Trips} />
-            <Route exact path="/pack" component={Pack} />
+            <Route path="/pack/:trip" component={Pack} />
+            </Nav>
           </Switch>
         </BrowserRouter>
       </div>

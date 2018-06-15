@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from "react-router-dom";
 import $ from 'jquery';
 import axios from 'axios';
 
@@ -9,14 +10,13 @@ class Trips extends React.Component {
 
     this.state = {
       trips: [],
-      showPack: true
     };
     this.deleteTrip = this.deleteTrip.bind(this);
   }
 
   componentDidMount() {
     axios.get('http://localhost:3005/api/trips')
-      .then((response) => {
+      .then(response => {
         this.setState({
           trips: response.data
         })
@@ -38,7 +38,6 @@ class Trips extends React.Component {
 
   render() {
     return (
-      this.state.trips ? 
       <div>
         <div className="row">
           <form className="form-group col-md-6 col-sm-12">
@@ -55,15 +54,13 @@ class Trips extends React.Component {
           <div className="row main_trip" key={trip.id}>
             <span className="col-md-4">{trip.location}</span>
             <span className="col-md-4">{`${trip.start_date}-${trip.end_date}`}</span>
-            <button className="col-md-1">Pack</button>
-            <button className="col-md-1">Enjoy</button>
-            <button className="col-md-1">Savor</button>
+            <button className="col-md-1">
+              <Link to={{ pathname: `/pack/${trip.location}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>Pack</Link>
+            </button>
             <i className="col-md-1 fas fa-trash-alt"></i>
           </div>
         )}
       </div>
-      :
-      <div className="loading">...loading</div>
   )}
 }
 
