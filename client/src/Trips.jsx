@@ -12,10 +12,11 @@ class Trips extends React.Component {
       trips: [],
     };
     this.deleteTrip = this.deleteTrip.bind(this);
+    // this.addTrip = this.addTrip.bind(this);
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3005/api/trips')
+    axios.get('/api/trips')
       .then(response => {
         this.setState({
           trips: response.data
@@ -25,6 +26,18 @@ class Trips extends React.Component {
         console.log(error);
     });
   }
+
+  // addTrip(loc, start, end, e) {
+  //   e.preventDefault();
+  //   axios.post('/api/trips', ${loc}/${start}/${end})
+  //     .then(response => {
+  //       console.log(response)
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+
+  // }
 
   deleteTrip(trip) {
     for(let i=0; i<this.state.trips.length; i++) {
@@ -44,10 +57,10 @@ class Trips extends React.Component {
             <button>Find a Trip</button>
           </form>
           <form className="form group col-md-6 col-sm-12">
-            <input type="text" placeholder="Location" />
-            <input type="date" />
-            <input type="date" />
-            <input type="submit" value="Add" />
+            <input type="text" placeholder="Location" id="location"/>
+            <input type="date" id="start"/>
+            <input type="date" id="end"/>
+            <input type="submit" value="Add" onClick={(e) => this.addTrip($('#location').val(), $('#start').val(), $('#end').val(), e)}/>
           </form>
         </div>
         {this.state.trips.map(trip => 
