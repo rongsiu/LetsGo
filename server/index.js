@@ -54,6 +54,10 @@ app.get('/api/personal/:trip', (req,res) => {
 		})
 })
 
+app.get('/sw.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../sw.js'));
+});
+
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
     if (err) {
@@ -61,5 +65,9 @@ app.get('/*', function(req, res) {
     }
   })
 })
+
+// app.post('/api/trips', function(req,res) {
+// 	INSERT INTO trips (location, end_date, start_date) VALUES ('canada', '2018-01-11', '2018-01-19');
+// })
 
 module.exports = app;
