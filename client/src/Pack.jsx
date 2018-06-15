@@ -27,20 +27,20 @@ class Pack extends React.Component {
 					<div className="row"><h3 className="col-sm-6">Shared</h3><i className="col-sm-6 fas fa-plus"></i></div>
 						<div>
 						Tent 
-						<i class="fas fa-check-circle"></i>
+						<i className="fas fa-check-circle"></i>
 						</div>
 						<div>
 						Water Filter
-						<i class="fas fa-check-circle"></i>
+						<i className="fas fa-check-circle"></i>
 						</div>
 					<div className="row"><h3 className="col-sm-6">Favors</h3><i className="col-sm-6 fas fa-plus"></i></div>
 						<div>
 						Hiking Poles 
-						<i class="fas fa-check-circle"></i>
+						<i className="fas fa-check-circle"></i>
 						</div>
 						<div>
 						Hiking Boots
-						<i class="fas fa-check-circle"></i>
+						<i className="fas fa-check-circle"></i>
 						</div>
 					<div className="row"><h3 className="col-sm-6">Personal</h3><i className="col-sm-6 fas fa-plus"></i></div>
 					<div className="row">
