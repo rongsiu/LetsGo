@@ -21,6 +21,39 @@ app.get('/api/trips', (req,res) => {
 		})
 })
 
+app.get('/api/shared/:trip', (req,res) => {
+	db.many(`SELECT * FROM public.shared_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
+app.get('/api/favor/:trip', (req,res) => {
+	db.many(`SELECT * FROM public.favor_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
+app.get('/api/personal/:trip', (req,res) => {
+	db.many(`SELECT * FROM public.personal_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
     if (err) {
@@ -28,7 +61,5 @@ app.get('/*', function(req, res) {
     }
   })
 })
-
-
 
 module.exports = app;
