@@ -21,8 +21,8 @@ app.get('/api/trips', (req,res) => {
 		})
 })
 
-app.get('/api/shared/:trip', (req,res) => {
-	db.many(`SELECT * FROM public.shared_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+app.get('/api/shared/:trip_id', (req,res) => {
+	db.many(`SELECT * FROM public.shared_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = ${req.params.trip_id}`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -32,8 +32,8 @@ app.get('/api/shared/:trip', (req,res) => {
 		})
 })
 
-app.get('/api/favor/:trip', (req,res) => {
-	db.many(`SELECT * FROM public.favor_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+app.get('/api/favor/:trip_id', (req,res) => {
+	db.many(`SELECT * FROM public.favor_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = '${req.params.trip_id}'`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -43,8 +43,8 @@ app.get('/api/favor/:trip', (req,res) => {
 		})
 })
 
-app.get('/api/personal/:trip', (req,res) => {
-	db.many(`SELECT * FROM public.personal_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.location = '${req.params.trip}'`)
+app.get('/api/personal/:trip_id', (req,res) => {
+	db.many(`SELECT * FROM public.personal_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = '${req.params.trip_id}'`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -66,8 +66,51 @@ app.get('/*', function(req, res) {
   })
 })
 
-// app.post('/api/trips', function(req,res) {
-// 	INSERT INTO trips (location, end_date, start_date) VALUES ('canada', '2018-01-11', '2018-01-19');
-// })
+app.post('/api/trips', function(req,res) {
+	// console.log(new Date(req.body.start), new Date(req.body.end)) UPDATE HARDCODED DATE
+	db.one(`INSERT INTO trips (trip, end_date, start_date) VALUES ('${req.body.trip}', '2018-05-20', '2018-05-25') RETURNING (id, trip, end_date, start_date)`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
+app.post('/api/pack/:type', function(req,res) {
+	req.params.type = 'personl_items' ?
+	db.one(`INSERT INTO ${req.params.type} (trip_id, item) VALUES ('${req.body.trip_id}', '${req.body.item}') RETURNING (item)`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+	:
+	db.one(`INSERT INTO ${req.params.type} (trip_id, item, added_by) VALUES ('${req.body.trip_id}', '${req.body.item}', '${req.body.added_by}') RETURNING (item)`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
+//DELETE TRIP NOT WORKING
+app.delete('/api/trips', function(req,res) {
+	console.log('body', req.body)
+	db.one(`DELETE FROM trips WHERE trip = '${req.body}'`)
+		.then(result => {
+			console.log('server', result)
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
 
 module.exports = app;
