@@ -16,3 +16,9 @@ body {	font-family: 'Indie Flower', cursive;
 	border-color: black;
 	padding: 5px;
 }
+
+
+/*UPDATE STYLE CHANGE*/
+.checked {
+	color: green;
+}

@@ -14,7 +14,9 @@ class Pack extends React.Component {
 			personal_items: [],
 		}
 
-		this.addItems = this.addItems.bind(this);
+		// this.addItems = this.addItems.bind(this);
+		// this.claimItems = this.claimItems.bind(this);
+		this.changeColor = this.changeColor.bind(this);
 	}
 
 //HARDCODED
@@ -23,7 +25,7 @@ class Pack extends React.Component {
 		this.dates = this.props.location.state.dates;
 		// this.trip = 'canada'
 		// this.dates = 'jan'
-		this.trip_id = '1'
+		this.trip_id = this.props.location.pathname.split('/')[3];
 	}
 
 	componentDidMount() {
@@ -61,15 +63,15 @@ class Pack extends React.Component {
 
 	addItems(e, type, trip_id, item, added_by) {
 		e.preventDefault();
-		console.log('test', type, trip_id, item, added_by)
 		axios.post(`/api/pack/${type}`, {
 			trip_id,
 			item,
 			added_by,
 		})
 		.then(response => {
+			let id = response.data.row.split(',')[1].substring(0, response.data.row.split(',')[1].length-1);
 			this.setState(prevState => ({
-				[type]: [...prevState[type], {item: response.data.item}]
+				[type]: [...prevState[type], {item, added_by, id}]
 				})
 			)
 		})
@@ -77,7 +79,41 @@ class Pack extends React.Component {
 			console.log(error))
 	}
 
-//UPDATED ADDED BY onClick- HARDCODED NOW
+	claimItems(e, type, trip_id, id, claimed_by) {
+		console.log('called', type, trip_id, id, claimed_by)
+		e.preventDefault();
+		axios.patch(`/api/pack/${type}`, {
+			trip_id,
+			id,
+			claimed_by
+		})
+		.then(response => {
+			console.log(response)
+			this.setState(prevState => {
+				let newState = [...prevState[type]];
+				for(let i = 0; i < newState.length; i++) {
+					if(newState[i].id.toString() === id) {
+						console.log('afaef',newState[i])
+						newState[i].claimed_by = claimed_by
+						console.log(newState)
+					}
+				}
+				return {
+					[type]: newState
+				}
+			})
+		})
+		.catch(error =>
+			console.log(error)
+		)
+	}
+
+//ADD STYLE CHANGE
+	changeColor() {
+		 $(".unchecked").toggleClass("checked");
+	}
+
+//UPDATED ADDED BY onClick- HARDCODED NOW CLAIMED BY hardcoded
   render() {
 		return (
 			<div>
@@ -97,7 +133,7 @@ class Pack extends React.Component {
 						{this.state.shared_items.map(item =>
 							<div>
 							{item.item} 
-							<i className="fas fa-check-circle"></i>
+							<i className="fas fa-check-circle" id={item.id} onClick={(e)=> this.claimItems(e, 'shared_items', this.trip_id, e.target.id,'rachel')}></i>
 							</div>
 						)}
 
@@ -111,7 +147,7 @@ class Pack extends React.Component {
 						{this.state.favor_items.map(item => 
 							<div>
 							{item.item}
-							<i className="fas fa-check-circle"></i>
+							<i className="fas fa-check-circle" id={item.id} onClick={(e)=> this.claimItems(e, 'favor_items', this.trip_id, e.target.id,'rachel')}></i>
 							</div>
 						)}
 
@@ -137,21 +173,40 @@ class Pack extends React.Component {
 							)}
 						</ul>
 						<ul className="col-md-4">
-							{this.state.personal_items.map(item => 
-								<li>
-								{item.item}
-								<i className="fas fa-check-circle"></i>
-								</li>
+							{this.state.shared_items.map(item => {
+								if(item.claimed_by ==='rachel') {
+									return (
+									<li>
+									{item.item}
+									<i className="fas fa-check-circle"></i>
+									</li>)
+								}}
 							)}
 						</ul>
 						<ul className="col-md-4">
-							{this.state.personal_items.map(item => 
-								<li>
-								{item.item}
-								<i className="fas fa-check-circle"></i>
-								</li>
-							)}
+							{this.state.favor_items.map(item => {
+								if(item.claimed_by ==='rachel') {
+									return (
+									<li>
+									{item.item}
+									<i className="fas fa-check-circle"></i>
+									</li>)
+								}}
+							)}						
 						</ul>
+						<div>
+						Your favor
+							{this.state.favor_items.map(item => {
+								 console.log('check', item)
+								if(item.added_by ==='rachel') {
+									return (
+										<div>
+										<li>{item.item}</li>
+										</div>
+									)
+								}}
+							)}
+						</div>
 					</div>
 				</div>
 			</div> 

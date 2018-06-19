@@ -13,7 +13,6 @@ class Trips extends React.Component {
     };
     this.deleteTrip = this.deleteTrip.bind(this);
     this.addTrip = this.addTrip.bind(this);
-    this.deleteTrip = this.deleteTrip.bind(this);
   }
 
   componentDidMount() {
