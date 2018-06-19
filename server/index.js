@@ -22,8 +22,9 @@ app.get('/api/trips', (req,res) => {
 })
 
 app.get('/api/shared/:trip_id', (req,res) => {
-	db.many(`SELECT * FROM public.shared_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = ${req.params.trip_id}`)
+	db.many(`SELECT s.id, s.item, s.claimed_by FROM public.shared_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = ${req.params.trip_id}`)
 		.then(result => {
+			console.log(result)
 			res.write(JSON.stringify(result));
 			res.end();
 		})
@@ -33,7 +34,7 @@ app.get('/api/shared/:trip_id', (req,res) => {
 })
 
 app.get('/api/favor/:trip_id', (req,res) => {
-	db.many(`SELECT * FROM public.favor_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = '${req.params.trip_id}'`)
+	db.many(`SELECT s.id, s.item, s.claimed_by, s.added_by FROM public.favor_items s JOIN public.trips t ON s.trip_id = t.id WHERE t.id = '${req.params.trip_id}'`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -79,8 +80,8 @@ app.post('/api/trips', function(req,res) {
 })
 
 app.post('/api/pack/:type', function(req,res) {
-	req.params.type = 'personl_items' ?
-	db.one(`INSERT INTO ${req.params.type} (trip_id, item) VALUES ('${req.body.trip_id}', '${req.body.item}') RETURNING (item)`)
+	req.params.type === 'personal_items' ?
+	db.one(`INSERT INTO ${req.params.type} (trip_id, item) VALUES (${req.body.trip_id}, '${req.body.item}') RETURNING (item, id)`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -89,7 +90,19 @@ app.post('/api/pack/:type', function(req,res) {
 			console.log(error)
 		})
 	:
-	db.one(`INSERT INTO ${req.params.type} (trip_id, item, added_by) VALUES ('${req.body.trip_id}', '${req.body.item}', '${req.body.added_by}') RETURNING (item)`)
+	db.one(`INSERT INTO ${req.params.type} (trip_id, item, added_by) VALUES (${req.body.trip_id}, '${req.body.item}', '${req.body.added_by}') RETURNING (item, id)`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
+
+app.patch('/api/pack/:type', function(req,res) {
+	db.one(`UPDATE ${req.params.type} SET claimed_by='${req.body.claimed_by}' WHERE id=${req.body.id} AND trip_id=${req.body.trip_id} RETURNING (id, claimed_by)`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
