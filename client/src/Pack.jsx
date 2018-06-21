@@ -159,12 +159,13 @@ class Pack extends React.Component {
 						</form>
 					</div>
 					<div className="row">
-						<div className="col-md-4">Self</div>
-						<div className="col-md-4">Claimed Group</div>
-						<div className="col-md-4">Claimed Favor</div>
+						<div className="col-md-3">Self</div>
+						<div className="col-md-3">Claimed Group</div>
+						<div className="col-md-3">Claimed Favor</div>
+						<div className="col-md-3">Your Requests</div>
 					</div>
 					<div className="row">
-						<ul className="col-md-4">
+						<ul className="col-md-3">
 							{this.state.personal_items.map(item => 
 								<li>
 								{item.item}
@@ -172,7 +173,7 @@ class Pack extends React.Component {
 								</li>
 							)}
 						</ul>
-						<ul className="col-md-4">
+						<ul className="col-md-3">
 							{this.state.shared_items.map(item => {
 								if(item.claimed_by ==='rachel') {
 									return (
@@ -183,7 +184,7 @@ class Pack extends React.Component {
 								}}
 							)}
 						</ul>
-						<ul className="col-md-4">
+						<ul className="col-md-3">
 							{this.state.favor_items.map(item => {
 								if(item.claimed_by ==='rachel') {
 									return (
@@ -194,19 +195,16 @@ class Pack extends React.Component {
 								}}
 							)}						
 						</ul>
-						<div>
-						Your favor
+						<ul className="col-md-3">
 							{this.state.favor_items.map(item => {
 								 console.log('check', item)
 								if(item.added_by ==='rachel') {
 									return (
-										<div>
 										<li>{item.item}</li>
-										</div>
 									)
 								}}
 							)}
-						</div>
+						</ul>
 					</div>
 				</div>
 			</div> 
