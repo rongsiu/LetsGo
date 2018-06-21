@@ -22,7 +22,7 @@ INSERT INTO trips (trip, end_date, start_date) VALUES ('vancouver', '2018-10-09'
 CREATE TABLE shared_items
 (
   id SERIAL PRIMARY KEY,
-  trip_id INT NOT NULL REFERENCES trips(id),
+  trip_id INT NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
   item VARCHAR,
   added_by VARCHAR,
   claimed_by VARCHAR
@@ -49,7 +49,7 @@ INSERT INTO shared_items (trip_id, item, added_by, claimed_by) VALUES (4,'pot', 
 CREATE TABLE favor_items
 (
   id SERIAL PRIMARY KEY,
-  trip_id INT NOT NULL REFERENCES trips(id),
+  trip_id INT NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
   item VARCHAR,
   added_by VARCHAR,
   claimed_by VARCHAR
@@ -70,7 +70,7 @@ INSERT INTO favor_items (trip_id, item, added_by, claimed_by) VALUES (5,'head la
 CREATE TABLE personal_items
 (
   id SERIAL PRIMARY KEY,
-  trip_id INT NOT NULL REFERENCES trips(id),
+  trip_id INT NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
   item VARCHAR
 );
 

@@ -12,8 +12,6 @@ class Trips extends React.Component {
     this.state = {
       trips: [],
     };
-    this.deleteTrip = this.deleteTrip.bind(this);
-    this.addTrip = this.addTrip.bind(this);
   }
 
   componentDidMount() {
@@ -30,11 +28,9 @@ class Trips extends React.Component {
   }
 
   addTrip(trip, start, end, e) {
-    console.log('test', trip, start, end)
     e.preventDefault();
-    axios.post('/api/trips', {trip, start, end})
+    axios.post('/api/trips/add', {trip, start, end})
       .then(response => {
-        console.log('res', response.data.row)
         let newPost = 
           {
           id: response.data.row.split(",")[0].substring(1),
@@ -42,10 +38,10 @@ class Trips extends React.Component {
           start_date: response.data.row.split(",")[2],
           end_date: response.data.row.split(",")[3].substring(0,response.data.row.split(",")[2].length-1),
           };
-          console.log('new', newPost)
         this.setState(prevState => ({
-          trips: [...prevState.trips, newPost]
+          trips: [newPost, ...prevState.trips]
         }))
+        $("#newTrip").val("")
       })
       .catch(error => {
         console.log(error)
@@ -53,28 +49,36 @@ class Trips extends React.Component {
 
   }
 
-//DELETE TRIP NOT WORKING
-  deleteTrip(trip) {
-    console.log(trip)
-    axios.delete('/api/trips', {
-    data: 'abc',
-})
-      .then(response => {
-        console.log(response)
+  deleteTrip(trip_id) {
+    axios.delete('/api/trips/delete', {
+      data: {trip_id}
+    })
+    .then(response => {
+      this.setState(prevState => {
+        let newState = [...prevState.trips];
+        for(let i = 0; i < newState.length; i++) {
+          if(newState[i].id.toString() === trip_id) {
+            newState.splice(i, 1)
+          }
+        }
+        return {
+          trips: newState
+        }
       })
-      .catch(error => {
-        console.log(error)
-      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   render() {
     return (
       <div className="container">
         <form className="add_trip">
-          <input type="text" placeholder="Location" id="newTrip"/>
+          <input className="start_form" type="text" placeholder="   Location" id="newTrip"/>
           <input type="date" id="start"/>
           <input type="date" id="end"/>
-          <input type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
+          <input className="end_form" type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
         </form>
         {this.state.trips.map(trip => 
           <div className="row trips">
@@ -84,7 +88,7 @@ class Trips extends React.Component {
               <i className="icon fas fa-suitcase fa-lg"></i>
             </Link>
             <div className="col-md-1">
-              <i className="icon fas fa-minus-circle fa-lg" id={trip.trip} onClick={(e) => this.deleteTrip(e.target.id)}></i>
+              <i className="icon fas fa-minus-circle fa-lg" id={trip.id} onClick={(e) => this.deleteTrip(e.target.id)}></i>
             </div>
           </div>
         )}
