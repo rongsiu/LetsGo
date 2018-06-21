@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import $ from 'jquery';
 import axios from 'axios';
+import moment from 'moment';
 
 class Trips extends React.Component {
   constructor(props) {
@@ -68,26 +69,23 @@ class Trips extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <form className="form-group col-md-6 col-sm-12">
-            <button>Find a Trip</button>
-          </form>
-          <form className="form group col-md-6 col-sm-12">
-            <input type="text" placeholder="Location" id="newTrip"/>
-            <input type="date" id="start"/>
-            <input type="date" id="end"/>
-            <input type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
-          </form>
-        </div>
+      <div className="container">
+        <form className="add_trip">
+          <input type="text" placeholder="Location" id="newTrip"/>
+          <input type="date" id="start"/>
+          <input type="date" id="end"/>
+          <input type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
+        </form>
         {this.state.trips.map(trip => 
-          <div className="row main_trip">
-            <span className="col-md-4">{trip.trip}</span>
-            <span className="col-md-4">{`${trip.start_date}-${trip.end_date}`}</span>
-            <button className="col-md-1">
-              <Link to={{ pathname: `/pack/${trip.trip}/${trip.id}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>Pack</Link>
-            </button>
-            <i className="col-md-1 fas fa-trash-alt" id={trip.trip} onClick={(e) => this.deleteTrip(e.target.id)}></i>
+          <div className="row trips">
+            <span className="col-md-5">{trip.trip}</span>
+            <span className="col-md-5">{`${moment(trip.start_date).format('DD MMM')} - ${moment(trip.end_date).format('DD MMM')}`}</span>
+            <Link className="col-md-1" to={{ pathname: `/pack/${trip.trip}/${trip.id}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>
+              <i className="icon fas fa-suitcase fa-lg"></i>
+            </Link>
+            <div className="col-md-1">
+              <i className="icon fas fa-minus-circle fa-lg" id={trip.trip} onClick={(e) => this.deleteTrip(e.target.id)}></i>
+            </div>
           </div>
         )}
       </div>
