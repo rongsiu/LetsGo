@@ -27,16 +27,16 @@ class Trips extends React.Component {
     });
   }
 
-  addTrip(trip, start, end, e) {
+  addTrip(trip, start_date, end_date, e) {
     e.preventDefault();
-    axios.post('/api/trips/add', {trip, start, end})
+    axios.post('/api/trips/add', {trip, start_date, end_date})
       .then(response => {
         let newPost = 
           {
           id: response.data.row.split(",")[0].substring(1),
-          trip: response.data.row.split(",")[1],
-          start_date: response.data.row.split(",")[2],
-          end_date: response.data.row.split(",")[3].substring(0,response.data.row.split(",")[2].length-1),
+          trip, 
+          start_date,
+          end_date,
           };
         this.setState(prevState => ({
           trips: [newPost, ...prevState.trips]

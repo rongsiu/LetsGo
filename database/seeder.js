@@ -6,18 +6,18 @@ CREATE TABLE trips
 (
   id SERIAL PRIMARY KEY,
   trip VARCHAR,
-  end_date DATE,
-  start_date DATE 
+  start_date VARCHAR,
+  end_date VARCHAR 
 );
 
-INSERT INTO trips (trip, end_date, start_date) VALUES ('canada', '2018-01-11', '2018-01-19');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('london', '2018-02-24', '2018-02-27');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('texas', '2018-03-13', '2018-03-20');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('taiwan', '2018-04-11', '2018-04-18');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('yosemite', '2018-05-16', '2018-05-22');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('tahoe', '2018-06-23', '2018-07-03');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('berlin', '2018-07-15', '2018-07-28');
-INSERT INTO trips (trip, end_date, start_date) VALUES ('vancouver', '2018-10-09', '2018-10-19');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('canada', '2018-01-11', '2018-01-19');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('london', '2018-02-24', '2018-02-27');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('texas', '2018-03-13', '2018-03-20');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('taiwan', '2018-04-11', '2018-04-18');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('yosemite', '2018-05-16', '2018-05-22');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('tahoe', '2018-06-23', '2018-07-03');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('berlin', '2018-07-15', '2018-07-28');
+INSERT INTO trips (trip, start_date, end_date) VALUES ('vancouver', '2018-10-09', '2018-10-19');
 
 CREATE TABLE shared_items
 (
