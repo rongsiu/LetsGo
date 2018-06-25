@@ -24,8 +24,7 @@ app.delete('/api/trips/delete', function(req,res) {
 })
 
 app.post('/api/trips/add', function(req,res) {
-	// console.log(new Date(req.body.start), new Date(req.body.end)) UPDATE HARDCODED DATE
-	db.one(`INSERT INTO trips (trip, end_date, start_date) VALUES ('${req.body.trip}', '2018-05-20', '2018-05-25') RETURNING (id, trip, end_date, start_date)`)
+	db.one(`INSERT INTO trips (trip, end_date, start_date) VALUES ('${req.body.trip}', '${req.body.start_date}', '${req.body.end_date}') RETURNING (id, trip, end_date, start_date)`)
 		.then(result => {
 			res.write(JSON.stringify(result));
 			res.end();
@@ -135,6 +134,20 @@ app.patch('/api/pack/unclaim/:type', function(req,res) {
 			console.log(error)
 		})
 })
+
+//SAVOR
+
+app.get('/api/savor/:trip_id', (req,res) => {
+	db.many(`SELECT photo, trip_id FROM public.photos WHERE trip_id=${req.params.trip_id}`)
+		.then(result => {
+			res.write(JSON.stringify(result));
+			res.end();
+		})
+		.catch(error => {
+			console.log(error)
+		})
+})
+
 
 app.get('/sw.js', (req, res) => {
   res.sendFile(path.join(__dirname, '/../sw.js'));
