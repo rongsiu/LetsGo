@@ -5,6 +5,7 @@ const cors = require('cors');
 const db = require('../database/index.js');
 const passport = require('./config/passport.js');
 const session = require('express-session');
+const ReactDOMServer = require('react-dom/server');
 
 const app = express();
 app.use(cors());
@@ -62,7 +63,7 @@ app.get("/auth/facebook",
 // // handle the callback after facebook has authenticated the user
 app.get("/auth/facebook/callback",
     passport.authenticate("facebook", {
-        successRedirect : "/",
+        successRedirect : "/trips",
         failureRedirect : "/login"
 		}),
   function(req, res) {
@@ -232,10 +233,14 @@ app.get('/sw.js', (req, res) => {
 });
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err)
-    }
+	console.log('user', req.user)
+  // res.sendFile(path.join(__dirname, '/../client/dist/index.html'), function(err) {
+  //   if (err) {
+  //     res.status(500).send(err)
+  //   }
+  // })
+  res.render('index.ejs', {
+  	user: req.user,
   })
 })
 

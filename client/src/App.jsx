@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        loggedIn === true ? (
+        !!loggedIn === true ? (
           <Component {...rest} {...props} />
         ) : (
           <Redirect
@@ -28,15 +28,15 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
 class App extends React.Component {
 
   render() {
+    console.log("props", this.props.user)
     return (
       <div >
         <BrowserRouter>
           <Switch>
             <Nav> 
-            <AuthButton/>
             <Route exact path="/login" component={Login} />
-            <PrivateRoute loggedIn={this.props.appState.loggedIn} exact path="/trips" component={Trips} />
-            <PrivateRoute loggedIn={this.props.appState.loggedIn} path="/pack/:trip" component={Pack} />
+            <PrivateRoute loggedIn={this.props.user} exact path="/trips" component={Trips} />
+            <PrivateRoute loggedIn={this.props.user}  path="/pack/:trip" component={Pack} />
             </Nav>
           </Switch>
         </BrowserRouter>

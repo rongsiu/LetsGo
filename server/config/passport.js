@@ -21,10 +21,13 @@ function findUser(id) {
 }
 
 passport.serializeUser(function (user, done) {
-    done(null, users[0].id);
+    console.log('serial', user)
+    done(null, user.id);
 });
 passport.deserializeUser(function (id, done) {
-    done(null, users[0]);
+    console.log('deserial', id, findUser(id))
+    done(null, findUser(id));
+
 });
 
 passport.use(new FacebookStrategy({
@@ -33,6 +36,7 @@ passport.use(new FacebookStrategy({
     "callbackURL"     : facebookAuth.callbackURL
 },
 function (token, refreshToken, profile, done) {
+    console.log('testttt', profile)
     var user = findUser(profile.id);
     if (user) {
         console.log(users);
@@ -41,7 +45,7 @@ function (token, refreshToken, profile, done) {
       console.log('profile', profile)
         var newUser = {
             "id":       profile.id,
-            "name":     profile.name.givenName + ' ' + profile.name.familyName,
+            "name":     profile.displayName,
             "email":    (profile.emails || '').toLowerCase(),
             "token":    token
         };
