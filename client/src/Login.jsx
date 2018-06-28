@@ -18,7 +18,6 @@ class Login extends React.Component {
     return (
       <div>
         <p>You must log in to view the page</p>
-
         <a href='/auth/facebook'>login through facebook</a>
       </div>
     )
