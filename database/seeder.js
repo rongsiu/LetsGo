@@ -6,8 +6,8 @@ CREATE TABLE trips
 (
   id SERIAL PRIMARY KEY,
   trip VARCHAR,
-  end_date VARCHAR,
-  start_date VARCHAR
+  start_date VARCHAR,
+  end_date VARCHAR
 );
 
 INSERT INTO trips (trip, start_date, end_date) VALUES ('chicago', '2018-01-11', '2018-01-19');

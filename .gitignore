@@ -1,3 +1,4 @@
 node_modules/
 .DS_STORE
 /development
+src/GMap.jsx

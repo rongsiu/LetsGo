@@ -12,13 +12,20 @@ class Pack extends React.Component {
 			shared_items: [],
 			favor_items: [],
 			personal_items: [],
+			// trip: '',
+			// trip_id: '',
+			sharedText: '',
 		}
 		// this.strikeThrough = this.strikeThrough.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentWillMount() {
 		this.trip = this.props.location.pathname.split('/')[2];
 		this.trip_id = this.props.location.pathname.split('/')[3];
+		// this.setState({
+		// 	trip: this.props.location.pathname.split('/')[2],
+		// })
 	}
 
 	componentDidMount() {
@@ -68,6 +75,7 @@ class Pack extends React.Component {
 				})
 			)
 			$("#shared").val("")
+			// this.state.sharedText
 			$("#favor").val("")
 			$("#personal").val("")
 		})
@@ -148,6 +156,12 @@ class Pack extends React.Component {
 		)
 	}
 
+	handleChange(event) {
+		
+		this.setState({sharedText: event.target.event})
+
+	}
+
 //strikethrough not working
 	// strikeThrough() {
 	// 	console.log('fwefwe')
@@ -175,7 +189,7 @@ class Pack extends React.Component {
 					<div className="pack_head">
 						<h3>Shared</h3>
 						<form className="add_item">
-							<input className="start_form" type="text" autocomplete="off" id="shared"/>
+							<input className="start_form" type="text" autocomplete="off" id="shared" onChange={this.handleChange}/>
 							<input className="end_form" type="submit" value="Add Items" onClick={(e)=> this.addItems(e, 'shared_items', this.trip_id, $('#shared').val(), 'rachel')}/>
 						</form>
 					</div>

@@ -71,7 +71,7 @@ body{
 }
 
 .trips {
-	border-style: solid;
+	/*border-style: solid;*/
 	border-color: grey;
 	border-width: 0.5px;
 	border-radius: 10px;
