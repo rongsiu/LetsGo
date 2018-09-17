@@ -19,6 +19,7 @@ class App extends React.Component {
             <Route path="/pack/:trip" component={Pack} />
             <Route path="/enjoy/:trip" component={Enjoy} />
             <Route path="/savor/:trip" component={Savor} />
+
             </Main>
           </Switch>
         </BrowserRouter>
@@ -28,3 +29,6 @@ class App extends React.Component {
 }
 
 export default App;
+
+          // Add a 404 component
+         // <Route component={NoMatch}/>
