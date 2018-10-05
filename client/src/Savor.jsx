@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Modal from 'react-modal';
 import PhotoUploader from './PhotoUploader.jsx'
-import { Link } from "react-router-dom";
 
 Modal.setAppElement('#app');
 
@@ -44,18 +43,6 @@ class Savor extends React.Component {
   render() {
     return(
       <div className="container">
-        <div className="pack_nav">
-          <h2>{this.trip}</h2>
-          <Link to={{ pathname: '/trips'}}>
-            <div><i className="icon fas fa-home fa-lg"></i></div>
-          </Link>  
-          <Link to={{ pathname: `/pack/${this.trip}/${this.trip_id}`}}>
-            <div><i className="icon fas fa-suitcase fa-lg"></i></div>
-          </Link>    
-          <Link to={{ pathname: `/enjoy/${this.trip}/${this.trip_id}`}}>
-            <div><i className="icon fas fa-info-circle fa-lg"></i></div>
-          </Link>
-        </div>
         <div className="gallery">
           <button onClick={this.toggleShowModal}>Add Photos</button>
           <Modal

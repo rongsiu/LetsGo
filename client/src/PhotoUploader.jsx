@@ -43,12 +43,12 @@ class PhotoUploader extends React.Component {
   render() {
     return (
       <div>
+        <h3>Add Photos</h3>
         <Dropzone
           onDrop={this.handleOnDrop}
           accept="image/*"
-          style={{"width" : "500px", "height" : "500px", "border" : "2px dotted black", "margin": "auto"}}
         >
-        Click here to upload photos...
+        {this.state.isUploading ? <div>Uploading</div> : <div>Uploaded</div>}
         </Dropzone>
       </div>
     );

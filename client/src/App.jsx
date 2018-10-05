@@ -18,7 +18,7 @@ class App extends React.Component {
             <Route exact path="/trips" component={Trips} />
             <Route path="/pack/:trip" component={Pack} />
             <Route path="/enjoy/:trip" component={Enjoy} />
-            <Route path="/savor/:trip" component={Savor} />
+            <Route path="/savor" component={Savor} />
             </Nav>
           </Switch>
         </BrowserRouter>
