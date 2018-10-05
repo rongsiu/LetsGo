@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 app.use('/api/trips', tripsRouter);
 app.use('/api/pack', packRouter);
-app.use('/api/pack', savorRouter);
+app.use('/api/savor', savorRouter);
 
 app.get('/sw.js', (req, res) => {
   res.sendFile(path.join(__dirname, '/../sw.js'));

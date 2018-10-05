@@ -64,6 +64,7 @@ class Savor extends React.Component {
           <PhotoUploader />
           </Modal>
           <div>
+          {console.log('PHOTOS', this.state.photos)}
             {this.state.photos.map(item =>
               <img className="photos" src={`https://s3-us-west-1.amazonaws.com/letsgophotos/${item.photo}.jpg`}/>
             )} 

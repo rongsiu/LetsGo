@@ -35,4 +35,4 @@ class Enjoy extends React.Component {
 	}
 }
 
-export default Enjoy
+export default Enjoy;
