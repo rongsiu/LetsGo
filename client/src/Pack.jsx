@@ -12,13 +12,20 @@ class Pack extends React.Component {
 			shared_items: [],
 			favor_items: [],
 			personal_items: [],
+			// trip: '',
+			// trip_id: '',
+			sharedText: '',
 		}
-		this.strikeThrough = this.strikeThrough.bind(this)
+		// this.strikeThrough = this.strikeThrough.bind(this)
+		this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentWillMount() {
 		this.trip = this.props.location.pathname.split('/')[2];
 		this.trip_id = this.props.location.pathname.split('/')[3];
+		// this.setState({
+		// 	trip: this.props.location.pathname.split('/')[2],
+		// })
 	}
 
 	componentDidMount() {
@@ -56,7 +63,7 @@ class Pack extends React.Component {
 
 	addItems(e, type, trip_id, item, added_by) {
 		e.preventDefault();
-		axios.post(`/api/pack/add/${type}`, {
+		axios.post(`/api/pack/${type}`, {
 			trip_id,
 			item,
 			added_by,
@@ -67,13 +74,17 @@ class Pack extends React.Component {
 				[type]: [...prevState[type], {item, added_by, id}]
 				})
 			)
+			$("#shared").val("")
+			// this.state.sharedText
+			$("#favor").val("")
+			$("#personal").val("")
 		})
 		.catch(error =>
 			console.log(error))
 	}
 
 	deleteItems(type, trip_id, item_id) {
-    axios.delete(`/api/pack/delete/${type}`, {
+    axios.delete(`/api/pack/${type}`, {
       data: {trip_id, item_id}
     })
     .then(response => {
@@ -145,24 +156,40 @@ class Pack extends React.Component {
 		)
 	}
 
-//strikethrough not working
-	strikeThrough() {
-		console.log('fwefwe')
-		$(".myItems").not(this).removeClass("strike_through");    
-  	$(this).toggleClass("strike_through");
+	handleChange(event) {
+		
+		this.setState({sharedText: event.target.event})
+
 	}
+
+//strikethrough not working
+	// strikeThrough() {
+	// 	console.log('fwefwe')
+	// 	$(".myItems").not(this).removeClass("strike_through");    
+ //  	$(this).toggleClass("strike_through");
+	// }
 
 //UPDATED ADDED BY onClick- HARDCODED NOW CLAIMED BY hardcoded
   render() {
 		return (
 			<div className="container">
-				<h2>{this.trip}</h2>
-				
+				<div className="pack_nav">
+					<h2>{this.trip}</h2>
+		      <Link to={{ pathname: '/trips'}}>
+		        <div><i className="icon fas fa-home fa-lg"></i></div>
+		      </Link>   
+		      <Link to={{ pathname: `/enjoy/${this.trip}/${this.trip_id}`}}>
+		        <div><i className="icon fas fa-info-circle fa-lg"></i></div>
+		      </Link>    
+		      <Link to={{ pathname: `/savor/${this.trip}/${this.trip_id}`}}>
+		        <div><i className="icon fas fa-images fa-lg"></i></div>
+		      </Link>
+		    </div>
 				<div className="pack_category">
 					<div className="pack_head">
 						<h3>Shared</h3>
 						<form className="add_item">
-							<input className="start_form" type="text" id="shared"/>
+							<input className="start_form" type="text" autocomplete="off" id="shared" onChange={this.handleChange}/>
 							<input className="end_form" type="submit" value="Add Items" onClick={(e)=> this.addItems(e, 'shared_items', this.trip_id, $('#shared').val(), 'rachel')}/>
 						</form>
 					</div>
@@ -185,7 +212,7 @@ class Pack extends React.Component {
 					<div className="pack_head">
 						<h3>Favors</h3>
 						<form className="add_item">
-							<input className="start_form" type="text" id="favor"/>
+							<input className="start_form" type="text" autocomplete="off" id="favor"/>
 							<input className="end_form"type="submit" value="Add Items" onClick={(e)=> this.addItems(e, 'favor_items', this.trip_id, $('#favor').val(), 'rachel')}/>
 						</form>
 					</div>
@@ -207,12 +234,12 @@ class Pack extends React.Component {
 					<div className="pack_head">
 						<h3>Personal</h3>
 						<form className="add_item">
-							<input className="start_form" type="text" id="personal"/>
+							<input className="start_form" type="text" autocomplete="off" id="personal"/>
 							<input className="end_form"type="submit" value="Add Items" onClick={(e)=> this.addItems(e, 'personal_items', this.trip_id, $('#personal').val(), 'rachel')}/>
 						</form>
 					</div>
 					<div className="row">
-						<div className="col-md-3">
+						<div className="col-xs-3">
 						<div>Self</div>
 							{this.state.personal_items.map(item => 
 								<div className="pack_item">
@@ -221,7 +248,7 @@ class Pack extends React.Component {
 								</div>
 							)}
 						</div>
-						<div className="col-md-3">
+						<div className="col-xs-3">
 						<div>Claimed Group</div>
 							{this.state.shared_items.map(item => {
 								if(item.claimed_by ==='rachel') {
@@ -233,7 +260,7 @@ class Pack extends React.Component {
 								}}
 							)}
 						</div>
-						<div className="col-md-3">
+						<div className="col-xs-3">
 						<div>Claimed Favor</div>
 							{this.state.favor_items.map(item => {
 								if(item.claimed_by ==='rachel') {
@@ -245,15 +272,15 @@ class Pack extends React.Component {
 								}}
 							)}						
 						</div>
-						<div className="col-md-3">
+						<div className="col-xs-3">
 						<div>Your Requests</div>
 							{this.state.favor_items.map(item => {
 								if(item.added_by ==='rachel') {
 									return (
 										<div className="pack_item">
 											<i className="fas fa-minus-circle" id={item.id} onClick={(e)=> this.deleteItems('favor_items', this.trip_id, e.target.id)}></i>
-											<div className="myItems strike_through" onClick={this.strikeThrough}>{item.item}</div>
-											<div className="claimed_by">{item.claimed_by ? item.claimed_by : 'unclaimed!!'}</div>
+											<div className="myItems">{item.item}</div>
+											<div className="claimed_by">{item.claimed_by ? item.claimed_by : '!!'}</div>
 										</div>
 									)
 								}}

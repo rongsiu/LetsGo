@@ -10,10 +10,7 @@ const Nav = props =>
 				<i class="fas fa-map-marker-alt"></i>
 			</div>
 			<div class="nav_text">
-			  <Link to="/trips">Home</Link>
-			  <Link to="/pack">Pack</Link>
-			  <Link to="/enjoy">Enjoy</Link>
-			  <Link to="/savor">Savor</Link>
+			  <Link to="/trips">Trips</Link>
 		  </div>
 		</nav>
 		{props.children}

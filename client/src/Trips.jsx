@@ -29,7 +29,7 @@ class Trips extends React.Component {
 
   addTrip(trip, start_date, end_date, e) {
     e.preventDefault();
-    axios.post('/api/trips/add', {trip, start_date, end_date})
+    axios.post('/api/trips', {trip, start_date, end_date})
       .then(response => {
         let newPost = 
           {
@@ -50,7 +50,7 @@ class Trips extends React.Component {
   }
 
   deleteTrip(trip_id) {
-    axios.delete('/api/trips/delete', {
+    axios.delete('/api/trips', {
       data: {trip_id}
     })
     .then(response => {
@@ -75,24 +75,24 @@ class Trips extends React.Component {
     return (
       <div className="container">
         <form className="add_trip">
-          <input className="start_form" type="text" placeholder="   Location" id="newTrip"/>
+          <input className="start_form" type="text" autocomplete="off" placeholder="   Location" id="newTrip"/>
           <input type="date" id="start"/>
           <input type="date" id="end"/>
           <input className="end_form" type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
         </form>
         {this.state.trips.map(trip => 
           <div className="row trips">
-            <div className="col-md-4">{trip.trip}</div>
-            <div className="col-md-5">{`${moment(trip.start_date).format('DD MMM')} - ${moment(trip.end_date).format('DD MMM')}`}</div>
-            <div className="icons col-md-3">
+            <div className="col-xs-4">{trip.trip}</div>
+            <div className="col-xs-5">{`${moment(trip.start_date).format('DD MMM')} - ${moment(trip.end_date).format('DD MMM')}`}</div>
+            <div className="icons col-xs-3">
               <Link to={{ pathname: `/pack/${trip.trip}/${trip.id}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>
-                <div><i className="fas fa-suitcase fa-lg"></i></div>
+                <div><i className="icon fas fa-suitcase fa-lg"></i></div>
               </Link>
               <Link to={{ pathname: `/enjoy/${trip.trip}/${trip.id}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>
-                <div><i className="fas fa-info-circle fa-lg"></i></div>
+                <div><i className="icon fas fa-info-circle fa-lg"></i></div>
               </Link>    
               <Link to={{ pathname: `/savor/${trip.trip}/${trip.id}`, state: { dates: `${trip.start_date}-${trip.end_date}`} }}>
-                <div><i className="fas fa-images fa-lg"></i></div>
+                <div><i className="icon fas fa-images fa-lg"></i></div>
               </Link>
               <div ><i className="fas fa-minus-circle fa-lg" id={trip.id} onClick={(e) => this.deleteTrip(e.target.id)}></i></div>
             </div>
