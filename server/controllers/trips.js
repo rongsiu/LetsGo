@@ -1,7 +1,5 @@
-//TRIPS
 const db = require('../../database/index.js');
 
-// app.delete('/api/trips/delete'
 const deleteTrip = (req,res) => {
 	db.one(`DELETE FROM trips WHERE id = ${req.body.trip_id} RETURNING (id)`)
 		.then(result => {
@@ -13,7 +11,6 @@ const deleteTrip = (req,res) => {
 		})
 }
 
-//app.post('/api/trips/add', f
 const addTrip = (req,res) => {
 	db.one(`INSERT INTO trips (trip, end_date, start_date) VALUES ('${req.body.trip}', '${req.body.start_date}', '${req.body.end_date}') RETURNING (id, trip, end_date, start_date)`)
 		.then(result => {
@@ -24,8 +21,6 @@ const addTrip = (req,res) => {
 			console.log(error)
 		})
 }
-
-//app.get('/api/trips', 
 
 const getTrips = (req,res) => {
 	db.many("SELECT * FROM public.trips")

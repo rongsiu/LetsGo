@@ -30,7 +30,10 @@
     "react-dom": "^16.3.2",
     "react-dropzone": "^4.2.9",
     "react-js-pagination": "^3.0.2",
-    "react-modal": "^3.4.5"
+    "react-modal": "^3.4.5",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
