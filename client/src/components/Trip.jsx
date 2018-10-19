@@ -2,11 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { Link } from "react-router-dom";
 
-const Trip = ({ trip: { trip, start_date, id, end_date }}) => {
+const Trip = ({ trip: { trip, start_date, id, end_date }, onDelete }) => {
   return (
-
       <div className="container">
-          {console.log('aaaa', trip)}
           <div className="row trips">
             <div className="col-xs-4">{ trip }</div>
             <div className="col-xs-5">{`${moment( start_date ).format('DD MMM')} - ${moment( end_date ).format('DD MMM')}`}</div>
@@ -20,7 +18,7 @@ const Trip = ({ trip: { trip, start_date, id, end_date }}) => {
               <Link to={{ pathname: `/savor/${ trip }/${ id }`, state: { dates: `${ start_date }-${ end_date }`} }}>
                 <div><i className="icon fas fa-images fa-lg"></i></div>
               </Link>
-             
+            <div ><i className="fas fa-minus-circle fa-lg" id={ id } onClick={(e) => onDelete(e.target.id)}></i></div>
             </div>
           </div>
       </div>
@@ -28,4 +26,3 @@ const Trip = ({ trip: { trip, start_date, id, end_date }}) => {
 
 export default Trip;
 
- // <div ><i className="fas fa-minus-circle fa-lg" id={ id } onClick={(e) => deleteTrip(e.target.id)}></i></div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Trips from '../containers/Trips.jsx';
+import Trips from '../containers/displayTrips.jsx';
 import Pack from './Pack.jsx';
 import Nav from './Nav.jsx';
 import Enjoy from './Enjoy.jsx';

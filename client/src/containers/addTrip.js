@@ -1,6 +1,7 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import { addTrip } from '../actions';
-import NewTrip from '../components/NewTrip';
+import NewTrip from '../components/NewTrip.jsx';
 
 const mapDispatchToProps = dispatch => {
   return {

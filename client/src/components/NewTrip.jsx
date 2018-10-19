@@ -1,37 +1,58 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 class NewTrip extends React.Component {
-	state = {
+    constructor(props) {
+    super(props)
+  
+	this.state = {
 		location: '',
 		start: '',
 		end: ''
 	}
 
-  handleReset = () => {
+  this.handleInputChange = this.handleInputChange.bind(this)
+  this.handleSubmit = this.handleSubmit.bind(this)
+  this.handleReset = this.handleReset.bind(this)
+}
+
+  handleInputChange(e){
     this.setState({
-      title: '',
-      body: ''
+      [e.target.name]: e.target.value
     });
   };
 
-	addTrip = e => {
+  handleSubmit(e) {
     e.preventDefault();
-    if (this.state.location.trim() && this.state.start.trim() && this.state.end.trim()) {
-      this.props.onAddPost(this.state);
+    console.log('caaa')
+    console.log('cccc', this.state)
+    if(this.state.location.trim() && this.state.start.trim() && this.state.end.trim()) {
+      console.log(this.props)
+      this.props.onAddTrip(this.state);
       this.handleReset();
     }
+    
+  };
+
+  handleReset(){
+    console.log('bbbb')
+    this.setState({
+      location: '',
+      start: '',
+      end: ''
+    });
   };
 
   render() {
     return (
       <div className="container">
-        <form className="add_trip">
-          <input className="start_form" type="text" autocomplete="off" placeholder="   Location" id="newTrip"/>
-          <input type="date" id="start"/>
-          <input type="date" id="end"/>
-          <input className="end_form" type="submit" value="Add" onClick={(e) => this.addTrip($('#newTrip').val(), $('#start').val(), $('#end').val(), e)}/>
+        <form className="add_trip" onSubmit={ this.handleSubmit }>
+          <input name="location" className="start_form" type="text" autocomplete="off" placeholder="   Location" onChange={ this.handleInputChange } value={ this.state.location }/>
+          <input name="start" type="date" onChange={ this.handleInputChange } value={ this.state.start }/>
+          <input name="end" type="date" onChange={ this.handleInputChange } value={ this.state.end }/>
+          <input className="end_form" type="submit" value="Add" />
         </form>
-      <div>
+      </div>
     )
 }
 }

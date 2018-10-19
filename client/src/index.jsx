@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers'
 import App from './components/App.jsx'
 import { getAllTrips } from './actions/index';
+import './style.scss'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
