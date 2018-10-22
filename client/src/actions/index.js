@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as types from '../constants/ActionTypes'
 
 export const addTrip = ( {location, start, end} ) => {
 	return (dispatch) => {
@@ -14,7 +15,7 @@ export const addTrip = ( {location, start, end} ) => {
 
 export const addTripSuccess = data => {
 	return {
-		type: 'ADD_TRIP',
+		type: types.ADD_TRIP,
 		payload: {
 			// id: data.row.split(",")[0].substring(1),
       id: data._id,
@@ -26,9 +27,13 @@ export const addTripSuccess = data => {
 }
 
 export const deleteTrip = id => {
+  console.log('faerfe')
   return (dispatch) => {
-    return axios.delete('/api/trips')
+    return axios.delete('/api/trips', {
+      data: {trip_id: id}
+    })
       .then(response => {
+        console.log('hhhh', response.data)
         dispatch(deleteTripSuccess(response.data))
       })
       .catch(error => {
@@ -38,11 +43,12 @@ export const deleteTrip = id => {
 };
 
 
-export const deleteTripSuccess = id => {
+export const deleteTripSuccess = data => {
+  console.log(data)
   return {
-    type: 'DELETE_POST',
+    type: types.DELETE_TRIP,
     payload: {
-      id
+      id: data.id
     }
   }
 }
@@ -50,7 +56,7 @@ export const deleteTripSuccess = id => {
 
 export const getTrip = (trips) => {
   return {
-    type: 'GET_TRIP',
+    type: types.GET_TRIP,
     trips
   }
 };

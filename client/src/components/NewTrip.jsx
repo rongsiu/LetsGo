@@ -27,7 +27,7 @@ class NewTrip extends React.Component {
     console.log('caaa')
     console.log('cccc', this.state)
     if(this.state.location.trim() && this.state.start.trim() && this.state.end.trim()) {
-      console.log(this.props)
+      console.log(this.props, this.state)
       this.props.onAddTrip(this.state);
       this.handleReset();
     }
